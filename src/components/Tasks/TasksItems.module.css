@@ -1,0 +1,7 @@
+.completed {
+  background-color: #91f10bda !important;
+}
+.task {
+  cursor: pointer !important;
+  user-select: none;
+}
