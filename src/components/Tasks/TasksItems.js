@@ -1,4 +1,11 @@
-import { CircleOutlined, Delete, Edit, TaskAlt } from '@mui/icons-material';
+import {
+  CircleOutlined,
+  Clear,
+  Delete,
+  Edit,
+  TaskAlt,
+} from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 import {
   Button,
   CardActions,
@@ -11,13 +18,10 @@ import { useDispatch } from 'react-redux';
 import classes from './TasksItems.module.css';
 import { tasksActions } from '../../store/todo-slice';
 import { useRef, useState } from 'react';
+////
+
 /////////////////////////////////
 const TasksItems = function (props) {
-  // const classes = makeStyles(theme => ({
-  //   completed: {
-  //     backgroundColor: '#91f10bda',
-  //   },
-  // }));
   const [isEditting, setIsEditting] = useState(false);
   const newTextInputRef = useRef('');
   const dispatchFN = useDispatch();
@@ -46,6 +50,7 @@ const TasksItems = function (props) {
     dispatchFN(tasksActions.editTask({ id: props.id, newText: newText }));
     setIsEditting(false);
   };
+
   return (
     <Paper
       elevation={4}
@@ -88,8 +93,8 @@ const TasksItems = function (props) {
             <Button
               size="small"
               variant="contained"
-              color="secondary"
-              startIcon={<Edit />}
+              color={!isEditting ? 'secondary' : 'success'}
+              startIcon={!isEditting ? <Edit /> : <CheckIcon />}
               onClick={isEditting ? onSubmitEditting : onEditTask}
             >
               {isEditting ? 'Ok' : 'Edit'}
@@ -97,11 +102,11 @@ const TasksItems = function (props) {
             <Button
               size="small"
               variant="contained"
-              color="error"
-              startIcon={<Delete />}
+              color={!isEditting ? 'error' : 'warning'}
+              startIcon={!isEditting ? <Delete /> : <Clear />}
               onClick={isEditting ? onCancelEditting : onDeleteTask}
             >
-              {isEditting ? 'Cancel' : 'Delete'}
+              <span> {isEditting ? 'Cancel' : 'Delete'}</span>
             </Button>
           </CardActions>
         </Grid>
